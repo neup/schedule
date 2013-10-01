@@ -16,6 +16,7 @@ class Schedule(object):
         1. 节假日串休时候要有特殊的逻辑来转换日期
         2. 查找教室名字的时候不能只用第一个字符来查，有更好的办法
     """
+
     dbUser = "root"
     dbHost = "127.0.0.1"
     dbPasswd = "654321"
@@ -148,13 +149,11 @@ class Schedule(object):
         self.cur.close()
         self.conn.close()
 
-    @staticmethod
-    def getFutureCoursesByRoom(roomName, days=2):
-        s = Schedule()
-        roomid = s._getRoomidFromName(roomName)
-        courses = s._getFutureCoursesByRoomid(roomid, days)
-        s.closeSchedule()
-        return s._render(courses)
+    def getFutureCoursesByRoom(self, roomName, days=2):
+        roomid = self._getRoomidFromName(roomName)
+        courses = self._getFutureCoursesByRoomid(roomid, days)
+        self.closeSchedule()
+        return self._render(courses)
 
     @staticmethod
     def queryTest():
@@ -165,3 +164,13 @@ class Schedule(object):
         print s._getFutureCoursesByRoomid("00204108"), '\n'
         print s._getRoomidFromName(u"逸夫楼101")
         s.closeSchedule()
+
+def getFutureCoursesByRoom(roomName, days=2):
+    s = Schedule()
+    return s.getFutureCoursesByRoom(roomName, days)
+
+def main():
+    pass
+
+if __name__ == '__main__':
+    main()
